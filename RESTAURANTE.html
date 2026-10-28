@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menú Digital - Restaurant-Bar El Quetzal</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Font Family Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              emerald: '#0d5c46',
+              dark: '#06231b',
+              gold: '#d4af37',
+              goldLight: '#f3e5ab',
+              cream: '#faf8f5',
+              cardBg: '#113028',
+            }
+          },
+          fontFamily: {
+            cinzel: ['Cinzel', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #06231b;
+      color: #faf8f5;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fff2a3 0%, #d4af37 50%, #aa820a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gold-border {
+      border-color: rgba(212, 175, 55, 0.3);
+    }
+    .gold-border-glow:focus-within {
+      border-color: rgba(212, 175, 55, 0.8);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+    }
+    /* Hide scrollbar for category tabs */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-16 selection:bg-amber-500 selection:text-black">
+
+  <!-- Header Banner -->
+  <header class="relative bg-gradient-to-b from-black/80 via-brand-dark/90 to-brand-dark border-b border-amber-500/20 pt-10 pb-8 px-4 text-center">
+    <div class="max-w-4xl mx-auto flex flex-col items-center">
+      <!-- Icon / Logo Badge -->
+      <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-amber-600 via-amber-400 to-emerald-400 p-[2px] shadow-lg shadow-emerald-900/50 mb-3">
+        <div class="w-full h-full bg-brand-dark rounded-full flex items-center justify-center">
+          <i data-lucide="utensils" class="w-8 h-8 text-amber-400"></i>
+        </div>
+      </div>
+      
+      <h1 class="font-cinzel text-3xl sm:text-5xl font-bold tracking-wider gold-gradient-text mb-2">
+        EL QUETZAL
+      </h1>
+      <p class="text-xs sm:text-sm uppercase tracking-[0.3em] text-emerald-300/80 font-medium mb-4">
+        Restaurant - Bar
+      </p>
+
+      <!-- Subtitle or slogan -->
+      <div class="flex items-center gap-2 text-amber-200/60 text-xs sm:text-sm italic">
+        <span class="h-[1px] w-8 bg-amber-500/30"></span>
+        <span>Menú Digital & Selección de Bebidas</span>
+        <span class="h-[1px] w-8 bg-amber-500/30"></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sticky Controls Section (Search & Tabs) -->
+  <div class="sticky top-0 z-40 bg-brand-dark/95 backdrop-blur-md border-b border-amber-500/20 shadow-xl py-3 px-4">
+    <div class="max-w-4xl mx-auto space-y-3">
+      
+      <!-- Search Input -->
+      <div class="relative gold-border-glow rounded-xl bg-emerald-950/60 border gold-border transition-all">
+        <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-amber-400/70"></i>
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="Buscar platillo, bebida, ingrediente o marca..." 
+          class="w-full bg-transparent pl-10 pr-10 py-2.5 text-sm text-amber-100 placeholder-amber-200/40 focus:outline-none"
+        >
+        <button id="clearSearch" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-amber-200/50 hover:text-amber-200">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div id="categoryTabs" class="flex gap-2 overflow-x-auto no-scrollbar py-1">
+        <!-- Generated dynamically in JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <main class="max-w-4xl mx-auto px-4 pt-6 space-y-10">
+
+    <!-- Information / Notices Banner -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div class="bg-gradient-to-r from-emerald-900/40 to-emerald-950/60 border border-emerald-500/20 rounded-lg p-3.5 flex items-center gap-3">
+        <div class="p-2 bg-emerald-500/10 rounded-lg text-emerald-400">
+          <i data-lucide="bike" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h4 class="text-xs font-semibold text-emerald-300">Servicio a Domicilio</h4>
+          <p class="text-xs text-emerald-100/70">Disponible únicamente en Zona Centro</p>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-r from-amber-950/40 to-emerald-950/60 border border-amber-500/20 rounded-lg p-3.5 flex items-center gap-3">
+        <div class="p-2 bg-amber-500/10 rounded-lg text-amber-400">
+          <i data-lucide="package" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h4 class="text-xs font-semibold text-amber-300">Empaque para Llevar</h4>
+          <p class="text-xs text-amber-100/70">+$10.00 MXN por concepto de empaque</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dynamic Menu Content Container -->
+    <div id="menuContainer" class="space-y-10">
+      <!-- Generated by JS -->
+    </div>
+
+    <!-- Empty Search Results -->
+    <div id="noResults" class="hidden text-center py-16 space-y-3">
+      <i data-lucide="utensils-crossed" class="w-12 h-12 text-amber-500/40 mx-auto"></i>
+      <h3 class="text-lg font-cinzel text-amber-200">No se encontraron productos</h3>
+      <p class="text-sm text-emerald-200/60">Intenta buscar con otros términos o cambia de categoría.</p>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-20 border-t border-amber-500/20 py-8 text-center text-xs text-emerald-200/50 space-y-2 px-4">
+    <p class="font-cinzel text-amber-300/80 font-semibold text-sm">Restaurant-Bar El Quetzal</p>
+    <p>Precios expresados en Moneda Nacional (MXN). IVA Incluido.</p>
+    <p class="text-[10px] text-emerald-300/30">© El Quetzal. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- Menu Data & Logic Script -->
+  <script>
+    const menuData = [
+      {
+        category: "Alimentos",
+        icon: "utensils",
+        description: "Platillos preparados al momento, snakcs y especialidades",
+        items: [
+          { name: "Chilaquiles con pollo", price: 85 },
+          { name: "Nachos de pollo", price: 90 },
+          { name: "Potatoes wedges", price: 70 },
+          { name: "Orden de papas a la francesa", price: 45 },
+          { name: "Orden de chicken tenders o nuggets", price: 60 },
+          { name: "10 nuggets", price: 90 },
+          { name: "Orden de boneless", price: 65 },
+          { name: "Chicken tenders con papas a la francesa", price: 90 },
+          { name: "Nuggets con papas a la francesa", price: 100 },
+          { name: "Combo Pack: Tender + Papas + Alitas + Boneless", price: 225, badge: "Recomendado" },
+          { 
+            name: "Orden de Alitas (Salsas)", 
+            price: 70, 
+            description: "Mango habanero, piña habanero, buffalo, bbq, bbq chipotle, tamarindo habanero." 
+          },
+          { name: "10 Alitas (Dos salsas)", price: 115 },
+          { name: "20 Alitas (Tres salsas)", price: 230 },
+          { name: "King Kong Burger", price: 130, description: "Doble carne con tocino" },
+          { name: "Hamburguesa clásica", price: 75 },
+          { name: "Hamburguesa con papas a la francesa", price: 90 },
+          { name: "Hamburguesa doble carne (Sin papas)", price: 95 },
+          { name: "Hamburguesa doble carne con papas a la francesa", price: 120 },
+          { name: "Hamburguesa hawaiana", price: 85 },
+          { name: "Hamburguesa hawaiana con papas a la francesa", price: 115 },
+          { name: "Burritos de res, pollo o mixto", price: 90 },
+          { name: "Burritos tejanos", price: 110, description: "Con camarones" },
+          { name: "Burrito ranchero", price: 120 },
+          { name: "Fajitas de res, pollo o mixto", price: 90 },
+          { name: "Fajitas tejanas", price: 110 },
+          { name: "Arrachera", price: 150, description: "Acompañada con papas a la francesa y su ensalada" },
+          { name: "Chuleta ahumada en salsa verde", price: 85 },
+          { name: "Quesadillas fajitas, pollo, res o mixto", price: 90 },
+          { name: "Mata Hambre", price: 120, description: "Con camarón, pulpos y pollo" },
+          { name: "Camarones a la diabla o enchipotlados", price: 145 },
+          { name: "Mini pizzas (Hawaiana o Pepperoni)", price: 85 },
+          { name: "Tacos de pollo", price: 18 },
+          { name: "Tacos de bistec", price: 18 },
+          { name: "Tacos de puerco", price: 18 },
+          { name: "Tacos de arrachera", price: 18 },
+          { name: "Tacos al pastor", price: 18 }
+        ]
+      },
+      {
+        category: "Alitas Terroríficas",
+        icon: "flame",
+        description: "Especialidades de la casa con salsas exclusivas",
+        items: [
+          { name: "Zombies", price: 70, description: "Preparadas con salsa de manzana verde" },
+          { name: "Diablas", price: 70, description: "Preparadas con salsa de frutos rojos" },
+          { name: "Catrinas", price: 70, description: "Preparadas con salsa buffalo" },
+          { name: "Brujas", price: 70, description: "Preparadas con salsa blueberry morita" }
+        ]
+      },
+      {
+        category: "Cervezas",
+        icon: "beer",
+        description: "Cervezas bien frías e idóneas para acompañar tus platillos",
+        items: [
+          { name: "Corona o Victoria 355ml", price: 22 },
+          { name: "Superior, Tecate e Indio 355ml", price: 22 },
+          { name: "Bohemia 355ml", price: 35 },
+          { name: "Ultra 355ml", price: 30 },
+          { name: "Heineken 355ml", price: 30 },
+          { name: "Caribe Cooler", price: 30 },
+          { name: "Strongbow", price: 30 },
+          { name: "Cubetazo de 355ml", price: 120, badge: "Promoción" }
+        ]
+      },
+      {
+        category: "Tequilas y Botellas",
+        icon: "wine",
+        description: "Selección premium por Shot, Botella o Preparado",
+        type: "liquor",
+        items: [
+          { name: "Don Julio 70", shot: 80, botella: 900, preparado: null },
+          { name: "Don Julio Blanco", shot: 75, botella: 800, preparado: null },
+          { name: "Don Julio Ceniza", shot: 90, botella: 970, preparado: null },
+          { name: "Don Julio Reposado", shot: 80, botella: 850, preparado: null },
+          { name: "Herradura Cristalino", shot: 80, botella: 850, preparado: null },
+          { name: "Herradura Reposado y Añejo", shot: 80, botella: 850, preparado: null },
+          { name: "Patrón Reposado y Añejo", shot: 80, botella: 930, preparado: null },
+          { name: "Patrón Cristalino", shot: 80, botella: 930, preparado: null },
+          { name: "1800 Reposado, Añejo y Blanco", shot: 60, botella: 790, preparado: null },
+          { name: "Hornitos Reposado", shot: 35, botella: 370, preparado: null },
+          { name: "Hornitos Cristalino", shot: 40, botella: 400, preparado: null },
+          { name: "Buchanan's Deluxe", shot: 80, botella: 830, preparado: 90 },
+          { name: "Buchanan's Master", shot: 90, botella: 1100, preparado: 105 },
+          { name: "Buchanan's Two Souls", shot: 90, botella: 1100, preparado: 105 },
+          { name: "Buchanan's Pineapple", shot: 80, botella: 860, preparado: 90 },
+          { name: "Buchanan's 18", shot: 190, botella: 2500, preparado: 200 },
+          { name: "Black Ruby", shot: 100, botella: 1150, preparado: null },
+          { name: "Black Label", shot: 90, botella: 1050, preparado: null },
+          { name: "Red Label", shot: 45, botella: 450, preparado: null },
+          { name: "Torres 15", shot: 50, botella: 750, preparado: null },
+          { name: "Jose Cuervo", shot: 35, botella: 260, preparado: null },
+          { name: "Jose Cuervo Blanco", shot: 40, botella: 295, preparado: null },
+          { name: "9900 Corralejo", shot: 50, botella: 700, preparado: null },
+          { name: "Tequila Dos Coronas", shot: 20, botella: 145, preparado: null },
+          { name: "Tequila Azul El Jefe", shot: 15, botella: 80, preparado: null }
+        ]
+      },
+      {
+        category: "Coctelería y Preparados",
+        icon: "glass-water",
+        description: "Tragos preparados y bebidas con o sin alcohol",
+        items: [
+          { name: "Paloma", price: 60 },
+          { name: "Margarita", price: 70 },
+          { name: "Margarita Tejana", price: 85 },
+          { name: "Piña Colada con alcohol", price: 70 },
+          { name: "Piña Colada sin alcohol", price: 60 },
+          { name: "Azulito con alcohol", price: 50 },
+          { name: "Azulito sin alcohol", price: 45 },
+          { name: "Vampiros", price: 70 },
+          { name: "Tequila Sunrise", price: 60 },
+          { name: "Limonada Eléctrica", price: 65 },
+          { name: "Micheladas", price: 65 }
+        ]
+      },
+      {
+        category: "Cafetería y Malteadas",
+        icon: "coffee",
+        description: "Bebidas calientes, frappés y malteadas cremosas",
+        items: [
+          { name: "Café Capuchino (Moka o Vainilla Francesa)", price: 45 },
+          { name: "Malteadas (Fresa, Chocolate, Blueberry, Oreo y Mango)", price: 65 },
+          { name: "Frappuchino de Oreo y Fresa", price: 65 }
+        ]
+      }
+    ];
+
+    let activeCategory = "Todas";
+    let searchQuery = "";
+
+    function renderTabs() {
+      const tabsContainer = document.getElementById('categoryTabs');
+      const categories = ["Todas", ...menuData.map(c => c.category)];
+      
+      tabsContainer.innerHTML = categories.map(cat => {
+        const isActive = activeCategory === cat;
+        return `
+          <button 
+            onclick="selectCategory('${cat}')"
+            class="px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 border ${
+              isActive 
+                ? 'bg-amber-400 text-slate-950 border-amber-300 font-semibold shadow-md shadow-amber-500/10' 
+                : 'bg-emerald-950/40 text-emerald-200/80 border-amber-500/20 hover:border-amber-400/50 hover:text-amber-200'
+            }"
+          >
+            ${cat}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectCategory(cat) {
+      activeCategory = cat;
+      renderTabs();
+      renderMenu();
+    }
+
+    function renderMenu() {
+      const container = document.getElementById('menuContainer');
+      const noResults = document.getElementById('noResults');
+      container.innerHTML = "";
+
+      let totalVisibleItems = 0;
+
+      menuData.forEach(catObj => {
+        // Filter category check
+        if (activeCategory !== "Todas" && activeCategory !== catObj.category) {
+          return;
+        }
+
+        // Filter items based on search
+        const filteredItems = catObj.items.filter(item => {
+          const q = searchQuery.toLowerCase();
+          const nameMatch = item.name.toLowerCase().includes(q);
+          const descMatch = item.description ? item.description.toLowerCase().includes(q) : false;
+          return nameMatch || descMatch;
+        });
+
+        if (filteredItems.length === 0) return;
+        totalVisibleItems += filteredItems.length;
+
+        // Render category block
+        const categoryBlock = document.createElement('section');
+        categoryBlock.className = "space-y-4";
+
+        let itemsHtml = "";
+
+        if (catObj.type === "liquor") {
+          // Render Tequila / Liquors with grid for Shot, Botella, Preparado
+          itemsHtml = `
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+              ${filteredItems.map(item => `
+                <div class="bg-gradient-to-br from-brand-cardBg to-emerald-950/90 border border-amber-500/20 rounded-xl p-4 flex flex-col justify-between hover:border-amber-400/40 transition-colors">
+                  <div class="mb-3">
+                    <h4 class="font-cinzel text-base font-semibold text-amber-100">${item.name}</h4>
+                  </div>
+                  <div class="grid grid-cols-3 gap-2 text-center pt-2 border-t border-amber-500/10">
+                    <div class="bg-black/20 py-1.5 px-1 rounded border border-emerald-500/10">
+                      <span class="block text-[10px] text-emerald-300/60 uppercase tracking-wider">Shot</span>
+                      <span class="text-sm font-bold text-amber-300">$${item.shot}</span>
+                    </div>
+                    <div class="bg-black/20 py-1.5 px-1 rounded border border-emerald-500/10">
+                      <span class="block text-[10px] text-emerald-300/60 uppercase tracking-wider">Botella</span>
+                      <span class="text-sm font-bold text-amber-300">${item.botella ? '$' + item.botella : '-'}</span>
+                    </div>
+                    <div class="bg-black/20 py-1.5 px-1 rounded border border-emerald-500/10">
+                      <span class="block text-[10px] text-emerald-300/60 uppercase tracking-wider">Preparado</span>
+                      <span class="text-sm font-bold text-amber-300">${item.preparado ? '$' + item.preparado : '-'}</span>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        } else {
+          // Standard Foods & Drinks
+          itemsHtml = `
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              ${filteredItems.map(item => `
+                <div class="bg-gradient-to-br from-brand-cardBg to-emerald-950/90 border border-amber-500/20 rounded-xl p-4 flex items-start justify-between gap-3 hover:border-amber-400/40 transition-colors">
+                  <div class="space-y-1">
+                    <div class="flex items-center gap-2">
+                      <h4 class="font-medium text-amber-100 text-sm sm:text-base">${item.name}</h4>
+                      ${item.badge ? `<span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] px-2 py-0.5 rounded-full font-semibold">${item.badge}</span>` : ''}
+                    </div>
+                    ${item.description ? `<p class="text-xs text-emerald-200/60 leading-relaxed">${item.description}</p>` : ''}
+                  </div>
+                  <div class="text-right shrink-0">
+                    <span class="text-base font-bold text-amber-400">$${item.price}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        }
+
+        categoryBlock.innerHTML = `
+          <div class="flex items-center gap-3 pb-2 border-b border-amber-500/20">
+            <div class="p-2 rounded-lg bg-amber-500/10 text-amber-400">
+              <i data-lucide="${catObj.icon || 'utensils'}" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="font-cinzel text-xl font-bold gold-gradient-text">${catObj.category}</h3>
+              ${catObj.description ? `<p class="text-xs text-emerald-200/50">${catObj.description}</p>` : ''}
+            </div>
+          </div>
+          ${itemsHtml}
+        `;
+
+        container.appendChild(categoryBlock);
+      });
+
+      if (totalVisibleItems === 0) {
+        noResults.classList.remove('hidden');
+      } else {
+        noResults.classList.add('hidden');
+      }
+
+      lucide.createIcons();
+    }
+
+    // Search Handler
+    const searchInput = document.getElementById('searchInput');
+    const clearSearchBtn = document.getElementById('clearSearch');
+
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim();
+      if (searchQuery.length > 0) {
+        clearSearchBtn.classList.remove('hidden');
+      } else {
+        clearSearchBtn.classList.add('hidden');
+      }
+      renderMenu();
+    });
+
+    clearSearchBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      searchQuery = '';
+      clearSearchBtn.classList.add('hidden');
+      renderMenu();
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTabs();
+      renderMenu();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
